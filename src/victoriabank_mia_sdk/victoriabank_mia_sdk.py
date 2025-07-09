@@ -2,7 +2,10 @@
 
 import logging
 
+from cryptography.x509 import load_pem_x509_certificate
+
 import requests
+import jwt
 
 # Based on Python SDK for maib MIA API https://github.com/alexminza/maib-mia-sdk-python (https://pypi.org/project/maib-mia-sdk/)
 # IPS Business WebApi https://test-ipspj.victoriabank.md/
@@ -92,10 +95,22 @@ class VictoriabankMiaSdk:
         return response
 
     @staticmethod
-    def validate_callback_signature(callback_data: dict, signature_key: str):
+    def decode_callback(callback_jwt: dict, public_key_pem: bytes):
         """Validates the callback data signature."""
 
-        pass
+        public_key_cert = load_pem_x509_certificate(public_key_pem)
+        public_key = public_key_cert.public_key()
+
+        algorithm = 'RS256'
+        try:
+            decoded_payload = jwt.decode(
+                jwt=callback_jwt,
+                key=public_key,
+                algorithms=[algorithm])
+
+            return decoded_payload
+        except Exception as ex:
+            raise VictoriabankPaymentException(f'Failed to decode and verify payload signature: {ex}') from ex
 
 #region Requests
 class BearerAuth(requests.auth.AuthBase):
