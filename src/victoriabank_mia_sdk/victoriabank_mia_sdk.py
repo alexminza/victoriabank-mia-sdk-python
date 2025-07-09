@@ -1,10 +1,6 @@
 """Python SDK for Victoriabank MIA API"""
 
-import json
 import logging
-import hashlib
-import hmac
-import base64
 
 import requests
 
@@ -16,7 +12,7 @@ logger = logging.getLogger(__name__)
 
 class VictoriabankMiaSdk:
     # Victoriabank MIA API base urls
-    DEFAULT_BASE_URL = ''
+    DEFAULT_BASE_URL = 'https://ips-api-pj.vb.md/'
     SANDBOX_BASE_URL = 'https://test-ipspj.victoriabank.md/'
     SANDBOX_DEMOPAY_URL = 'https://test-ipspj-demopay.victoriabank.md/api/pay/'
 
@@ -32,14 +28,10 @@ class VictoriabankMiaSdk:
     MIA_QR_EXTENSION_SIGNAL = 'api/v1/signals/{id}/'
 
     MIA_TRANSACTION_STATE = 'api/v1/transactionstate/{id}'
+    MIA_TRANSACTION_ID = 'api/v1/transaction/{id}'
     MIA_TRANSACTION_REVERSE = 'api/v1/transaction/{id}/reverse'
 
     MIA_TRANSACTIONS_LIST = 'api/v1/reconciliation/transactions'
-
-    MIA_PAYMENTS = 'mia/payments'
-    MIA_PAYMENTS_ID = 'mia/payments/{id}'
-    MIA_PAYMENTS_REFUND = 'mia/payments/{id}/refund'
-    MIA_TEST_PAY = 'mia/test-pay'
 
     DEFAULT_TIMEOUT = 30
 

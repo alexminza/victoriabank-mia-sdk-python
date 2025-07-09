@@ -64,6 +64,18 @@ class VictoriabankMiaApi:
         return self._execute_entity_id_operation(endpoint=VictoriabankMiaSdk.MIA_QR_EXTENSION_STATUS, entity_id=qr_extension_id, token=token, params=params)
     #endregion
 
+    #region Transactions
+    def transaction_state(self, qr_extension_id: str, token: str):
+        #TODO
+        pass
+
+    def transaction_reverse(self, transaction_id: str, token: str):
+        """Reverse already processed transaction"""
+        # https://test-ipspj.victoriabank.md/index.html#operations-Transaction-delete_api_v1_transaction__id_
+
+        return self._execute_entity_id_operation(endpoint=VictoriabankMiaSdk.MIA_TRANSACTION_ID, entity_id=transaction_id, token=token, method='DELETE')
+    #endregion
+
     #region Reconciliation
     def transactions_list(self, params: dict, token: str):
         """Transaction list for reconciliation"""
@@ -72,24 +84,19 @@ class VictoriabankMiaApi:
         return self._execute_operation(endpoint=VictoriabankMiaSdk.MIA_TRANSACTIONS_LIST, data=None, token=token, required_params=None, method='GET', params=params)
     #endregion
 
+    #region Signal
+    def signal_get_last(self, qr_extension_id: str, token: str):
+        #TODO
+        pass
+
+    #endregion
+
     #region Payment
     def test_pay(self, data: dict, token: str):
         """This API enables payment simulation based on the qrHeaderUUID, without requiring any bank or financial institution applications."""
         # https://test-ipspj-demopay.victoriabank.md/swagger/index.html#operations-Pay-post_api_Pay
 
         return self._execute_operation(endpoint=VictoriabankMiaSdk.SANDBOX_DEMOPAY_URL, data=data, token=token, required_params=self.REQUIRED_TEST_PAY_PARAMS)
-
-    def payment_details(self, pay_id: str, token: str):
-        """Get payment details by payment ID"""
-        return self._execute_entity_id_operation(endpoint=VictoriabankMiaSdk.MIA_PAYMENTS_ID, entity_id=pay_id, token=token)
-
-    def payment_refund(self, pay_id: str, data: dict, token: str):
-        """Refund payment by payment ID"""
-        return self._execute_entity_id_operation(endpoint=VictoriabankMiaSdk.MIA_PAYMENTS_REFUND, entity_id=pay_id, token=token, method='POST', data=data)
-
-    def payment_list(self, params: dict, token: str):
-        """Get payments list with filter"""
-        return self._execute_operation(endpoint=VictoriabankMiaSdk.MIA_PAYMENTS, data=None, token=token, required_params=None, method='GET', params=params)
     #endregion
 
     def _execute_operation(self, endpoint: str, data: dict, token: str, required_params: list, method: str = 'POST', params: dict = None):
