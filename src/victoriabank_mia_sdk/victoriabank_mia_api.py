@@ -25,13 +25,13 @@ class VictoriabankMiaApi:
         self._client = client
 
     #region QR
-    def qr_create(self, data: dict, params: dict, token: str):
+    def qr_create(self, data: dict, token: str, params: dict = None):
         """CreatePayeeQr - Register new payee-presented QR code"""
         # https://test-ipspj.victoriabank.md/index.html#operations-Qr-post_api_v1_qr
 
         return self._execute_operation(endpoint=VictoriabankMiaSdk.MIA_QR, data=data, token=token, required_params=self.REQUIRED_QR_PARAMS, params=params)
 
-    def qr_status(self, qr_id: str, params: dict, token: str):
+    def qr_status(self, qr_id: str, token: str, params: dict = None):
         """getPayeeQrStatus - Get status of payee-presented QR code header, statuses of N last extensions and list of M last payments against each extension"""
         # https://test-ipspj.victoriabank.md/index.html#operations-Qr-get_api_v1_qr__qrHeaderUUID__status
 
@@ -106,7 +106,7 @@ class VictoriabankMiaApi:
         """Sends a request to the specified endpoint."""
 
         try:
-            response = self._client.send_request(method=method, url=endpoint, data=data, params=params, token=token, entity_id=entity_id)
+            response = self._client.send_request(method=method, url=endpoint, json_data=data, params=params, token=token, entity_id=entity_id)
         except Exception as ex:
             raise VictoriabankPaymentException(f'HTTP error while sending {method} request to endpoint {endpoint}: {ex}') from ex
 

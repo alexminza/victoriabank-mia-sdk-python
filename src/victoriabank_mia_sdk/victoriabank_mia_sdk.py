@@ -69,14 +69,14 @@ class VictoriabankMiaSdk:
 
         return url
 
-    def send_request(self, method: str, url: str, data: dict = None, params: dict = None, token: str = None, entity_id: str = None):
+    def send_request(self, method: str, url: str, form_data: dict = None, json_data: dict = None, params: dict = None, token: str = None, entity_id: str = None):
         """Send a request and parse the response."""
 
         auth = BearerAuth(token) if token else None
         url = self._build_url(url=url, entity_id=entity_id)
 
-        logger.debug('VictoriabankMiaSdk Request: %s %s', method, url, extra={'method': method, 'url': url, 'data': data, 'params': params, 'token': token})
-        with requests.request(method=method, url=url, params=params, json=data, auth=auth, timeout=self.DEFAULT_TIMEOUT) as response:
+        logger.debug('VictoriabankMiaSdk Request: %s %s', method, url, extra={'method': method, 'url': url, 'form_data': form_data, 'json_data': json_data, 'params': params, 'token': token})
+        with requests.request(method=method, url=url, params=params, data=form_data, json=json_data, auth=auth, timeout=self.DEFAULT_TIMEOUT) as response:
             if not response.ok:
                 logger.error('VictoriabankMiaSdk Error: %d %s', response.status_code, response.text, extra={'method': method, 'url': url, 'params': params, 'response_text': response.text, 'status_code': response.status_code})
                 #response.raise_for_status()

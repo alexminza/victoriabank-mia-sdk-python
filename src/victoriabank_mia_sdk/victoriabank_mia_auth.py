@@ -49,7 +49,7 @@ class VictoriabankMiaAuth:
         # https://test-ipspj.victoriabank.md/index.html#operations-Token-post_identity_token
 
         try:
-            response = self._client.send_request('POST', VictoriabankMiaSdk.AUTH_TOKEN, data)
+            response = self._client.send_request('POST', VictoriabankMiaSdk.AUTH_TOKEN, form_data=data)
         except Exception as ex:
             logger.exception('VictoriabankMiaAuth.generate_token')
             raise VictoriabankTokenException(f'HTTP error while sending POST request to endpoint {VictoriabankMiaSdk.AUTH_TOKEN}') from ex
