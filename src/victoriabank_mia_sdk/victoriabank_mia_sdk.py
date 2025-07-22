@@ -74,6 +74,10 @@ class VictoriabankMiaSdk:
                 logger.error('VictoriabankMiaSdk Error: %d %s', response.status_code, response.text, extra={'method': method, 'url': url, 'params': params, 'response_text': response.text, 'status_code': response.status_code})
                 #response.raise_for_status()
 
+            if not response.content:
+                logger.debug('VictoriabankMiaSdk Response: %d', response.status_code, extra={'response_content': response.content})
+                return {}
+
             response_json: dict = response.json()
             logger.debug('VictoriabankMiaSdk Response: %d', response.status_code, extra={'response_json': response_json})
             return response_json
