@@ -94,6 +94,11 @@ class VictoriabankMiaApi:
         return self._execute_operation(endpoint=VictoriabankMiaSdk.SANDBOX_DEMOPAY_URL, data=data, token=token, required_params=self.REQUIRED_TEST_PAY_PARAMS)
     #endregion
 
+    def health_status(self):
+        # https://test-ipspj.victoriabank.md/index.html#operations-Health-get_api_v1_health_status
+
+        return self._send_request(method='GET', endpoint=VictoriabankMiaSdk.HEALTH_STATUS, token=None)
+
     def _execute_operation(self, endpoint: str, data: dict, token: str, required_params: list, method: str = 'POST', params: dict = None):
         self._validate_params(data=data, required_params=required_params)
         self._validate_access_token(token=token)

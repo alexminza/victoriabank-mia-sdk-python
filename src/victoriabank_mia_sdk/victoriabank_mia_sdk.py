@@ -19,9 +19,10 @@ class VictoriabankMiaSdk:
     SANDBOX_BASE_URL = 'https://test-ipspj.victoriabank.md/'
     SANDBOX_DEMOPAY_URL = 'https://test-ipspj-demopay.victoriabank.md/api/pay/'
 
-    # Victoriabank MIA API endpoints
+    HEALTH_STATUS = 'api/v1/health/status'
     AUTH_TOKEN = 'identity/token'
 
+    # Victoriabank MIA API endpoints
     MIA_QR = 'api/v1/qr'
     MIA_QR_ID = 'api/v1/qr/{id}'
     MIA_QR_STATUS = 'api/v1/qr/{id}/status'
