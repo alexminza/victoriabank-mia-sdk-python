@@ -30,10 +30,7 @@ class VictoriabankMiaSdk:
     MIA_QR_EXTENSION_STATUS = 'api/v1/qr-extensions/{id}/status'
     MIA_QR_EXTENSION_SIGNAL = 'api/v1/signals/{id}/'
 
-    MIA_TRANSACTION_STATE = 'api/v1/transactionstate/{id}'
     MIA_TRANSACTION_ID = 'api/v1/transaction/{id}'
-    MIA_TRANSACTION_REVERSE = 'api/v1/transaction/{id}/reverse'
-
     MIA_TRANSACTIONS_LIST = 'api/v1/reconciliation/transactions'
 
     DEFAULT_TIMEOUT = 30
@@ -95,7 +92,7 @@ class VictoriabankMiaSdk:
         return response
 
     @staticmethod
-    def decode_callback(callback_jwt: dict, public_key_pem: bytes):
+    def decode_callback(callback_jwt: str, public_key_pem: bytes):
         """Validates the callback data signature."""
 
         public_key_cert = load_pem_x509_certificate(public_key_pem)
@@ -103,7 +100,7 @@ class VictoriabankMiaSdk:
 
         algorithm = 'RS256'
         try:
-            decoded_payload = jwt.decode(
+            decoded_payload: dict = jwt.decode(
                 jwt=callback_jwt,
                 key=public_key,
                 algorithms=[algorithm])

@@ -65,18 +65,12 @@ class VictoriabankMiaApi:
     #endregion
 
     #region Transactions
-    def transaction_state(self, qr_extension_id: str, token: str):
-        #TODO
-        pass
-
     def transaction_reverse(self, transaction_id: str, token: str):
         """Reverse already processed transaction"""
         # https://test-ipspj.victoriabank.md/index.html#operations-Transaction-delete_api_v1_transaction__id_
 
         return self._execute_entity_id_operation(endpoint=VictoriabankMiaSdk.MIA_TRANSACTION_ID, entity_id=transaction_id, token=token, method='DELETE')
-    #endregion
 
-    #region Reconciliation
     def transactions_list(self, params: dict, token: str):
         """Transaction list for reconciliation"""
         # https://test-ipspj.victoriabank.md/index.html#operations-Reconciliation-get_api_v1_reconciliation_transactions
