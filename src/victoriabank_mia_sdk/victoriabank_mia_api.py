@@ -57,7 +57,7 @@ class VictoriabankMiaApi:
 
         return self._execute_entity_id_operation(endpoint=VictoriabankMiaSdk.MIA_QR_ACTIVE_EXTENSION, entity_id=qr_id, token=token, method='DELETE')
 
-    def qr_extension_status(self, qr_extension_id: str, params: dict, token: str):
+    def qr_extension_status(self, qr_extension_id: str, token: str,  params: dict = None):
         """getQrExtensionStatus - Get status of QR code extension and list of last N payments against it"""
         # https://test-ipspj.victoriabank.md/index.html#operations-Qr-get_api_v1_qr_extensions__qrExtensionUUID__status
 
