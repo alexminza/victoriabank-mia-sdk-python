@@ -79,9 +79,10 @@ class VictoriabankMiaApi:
     #endregion
 
     #region Signal
-    def signal_get_last(self, qr_extension_id: str, token: str):
-        #TODO
-        pass
+    def signal_get(self, qr_extension_id: str, token: str):
+        # https://test-ipspj.victoriabank.md/index.html#operations-Signal-get_api_v1_signal__qrExtensionUUID_
+
+        return self._execute_entity_id_operation(endpoint=VictoriabankMiaSdk.MIA_QR_EXTENSION_SIGNAL, entity_id=qr_extension_id, token=token)
 
     #endregion
 

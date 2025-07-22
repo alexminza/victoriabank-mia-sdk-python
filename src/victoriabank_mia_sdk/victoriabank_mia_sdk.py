@@ -28,7 +28,7 @@ class VictoriabankMiaSdk:
     MIA_QR_EXTENSIONS = 'api/v1/qr/{id}/extentions'
     MIA_QR_ACTIVE_EXTENSION = 'api/v1/qr/{id}/active-extension'
     MIA_QR_EXTENSION_STATUS = 'api/v1/qr-extensions/{id}/status'
-    MIA_QR_EXTENSION_SIGNAL = 'api/v1/signals/{id}/'
+    MIA_QR_EXTENSION_SIGNAL = 'api/v1/signal/{id}/'
 
     MIA_TRANSACTION_ID = 'api/v1/transaction/{id}'
     MIA_TRANSACTIONS_LIST = 'api/v1/reconciliation/transactions'
