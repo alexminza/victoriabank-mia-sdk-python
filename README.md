@@ -1,8 +1,10 @@
 # Python SDK for Victoriabank MIA API
-Victoriabank IPS Business WebApi docs: [https://test-ipspj.victoriabank.md/index.html](https://test-ipspj.victoriabank.md/index.html#operations-tag-Qr)
+* Victoriabank IPS Business WebApi docs: https://test-ipspj.victoriabank.md
+* GitHub project https://github.com/alexminza/victoriabank-mia-sdk-python
+* PyPI package https://pypi.org/project/victoriabank-mia-sdk/
 
 ## Installation
-To easily install or upgrade to the latest release, use `pip`.
+To easily install or upgrade to the latest release, use `pip`:
 ```shell
 pip install --upgrade victoriabank-mia-sdk
 ```
