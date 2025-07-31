@@ -8,7 +8,7 @@ import requests
 import jwt
 
 # Based on Python SDK for maib MIA API https://github.com/alexminza/maib-mia-sdk-python (https://pypi.org/project/maib-mia-sdk/)
-# IPS Business WebApi https://test-ipspj.victoriabank.md/
+# IPS Business WebApi https://test-ipspj.victoriabank.md
 # IPS DemoPay WebApi https://test-ipspj-demopay.victoriabank.md/swagger/
 
 logger = logging.getLogger(__name__)
