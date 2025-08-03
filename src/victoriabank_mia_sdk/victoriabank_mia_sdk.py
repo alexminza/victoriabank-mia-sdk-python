@@ -98,7 +98,7 @@ class VictoriabankMiaSdk:
 
     @staticmethod
     def decode_callback(callback_jwt: str, public_key_pem: bytes):
-        """Validates the callback data signature."""
+        """Decodes and validates the callback data signature."""
 
         public_key_cert = load_pem_x509_certificate(public_key_pem)
         public_key = public_key_cert.public_key()
@@ -117,7 +117,7 @@ class VictoriabankMiaSdk:
 #region Requests
 class BearerAuth(requests.auth.AuthBase):
     """Attaches HTTP Bearer Token Authentication to the given Request object."""
-    #https://requests.readthedocs.io/en/latest/user/authentication/#new-forms-of-authentication
+    # https://requests.readthedocs.io/en/latest/user/authentication/#new-forms-of-authentication
 
     token: str = None
 
