@@ -16,8 +16,8 @@ logger = logging.getLogger(__name__)
 class VictoriabankMiaSdk:
     # Victoriabank MIA API base urls
     DEFAULT_BASE_URL = 'https://ips-api-pj.vb.md/'
-    SANDBOX_BASE_URL = 'https://test-ipspj.victoriabank.md/'
-    SANDBOX_DEMOPAY_URL = 'https://test-ipspj-demopay.victoriabank.md/api/pay/'
+    TEST_BASE_URL = 'https://test-ipspj.victoriabank.md/'
+    TEST_DEMOPAY_URL = 'https://test-ipspj-demopay.victoriabank.md/api/pay/'
 
     HEALTH_STATUS = 'api/v1/health/status'
     AUTH_TOKEN = 'identity/token'

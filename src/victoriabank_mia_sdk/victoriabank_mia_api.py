@@ -91,7 +91,7 @@ class VictoriabankMiaApi:
         """This API enables payment simulation based on the qrHeaderUUID, without requiring any bank or financial institution applications."""
         # https://test-ipspj-demopay.victoriabank.md/swagger/index.html#operations-Pay-post_api_Pay
 
-        return self._execute_operation(endpoint=VictoriabankMiaSdk.SANDBOX_DEMOPAY_URL, data=data, token=token, required_params=self.REQUIRED_TEST_PAY_PARAMS)
+        return self._execute_operation(endpoint=VictoriabankMiaSdk.TEST_DEMOPAY_URL, data=data, token=token, required_params=self.REQUIRED_TEST_PAY_PARAMS)
     #endregion
 
     def health_status(self):
