@@ -1,23 +1,22 @@
 """Python SDK for Victoriabank MIA API"""
 
-import logging
-
 from cryptography.x509 import load_pem_x509_certificate
 
 import requests
 import jwt
 
-# Based on Python SDK for maib MIA API https://github.com/alexminza/maib-mia-sdk-python (https://pypi.org/project/maib-mia-sdk/)
-# IPS Business WebApi https://test-ipspj.victoriabank.md/
-# IPS DemoPay WebApi https://test-ipspj-demopay.victoriabank.md/swagger/
+from . import logger
 
-logger = logging.getLogger(__name__)
+
+# Based on Python SDK for maib MIA API https://github.com/alexminza/maib-mia-sdk-python (https://pypi.org/project/maib-mia-sdk/)
+# IPS Business WebApi https://test-ipspj.victoriabank.md
+# IPS DemoPay WebApi https://test-ipspj-demopay.victoriabank.md/swagger/
 
 class VictoriabankMiaSdk:
     # Victoriabank MIA API base urls
     DEFAULT_BASE_URL = 'https://ips-api-pj.vb.md/'
-    SANDBOX_BASE_URL = 'https://test-ipspj.victoriabank.md/'
-    SANDBOX_DEMOPAY_URL = 'https://test-ipspj-demopay.victoriabank.md/api/pay/'
+    TEST_BASE_URL = 'https://test-ipspj.victoriabank.md/'
+    TEST_DEMOPAY_URL = 'https://test-ipspj-demopay.victoriabank.md/api/pay/'
 
     HEALTH_STATUS = 'api/v1/health/status'
     AUTH_TOKEN = 'identity/token'
@@ -68,18 +67,18 @@ class VictoriabankMiaSdk:
         auth = BearerAuth(token) if token else None
         url = self._build_url(url=url, entity_id=entity_id)
 
-        logger.debug('VictoriabankMiaSdk Request: %s %s', method, url, extra={'method': method, 'url': url, 'form_data': form_data, 'json_data': json_data, 'params': params, 'token': token})
+        logger.debug('%s Request: %s %s', self.__qualname__, method, url, extra={'method': method, 'url': url, 'form_data': form_data, 'json_data': json_data, 'params': params, 'token': token})
         with requests.request(method=method, url=url, params=params, data=form_data, json=json_data, auth=auth, timeout=self.DEFAULT_TIMEOUT) as response:
             if not response.ok:
-                logger.error('VictoriabankMiaSdk Error: %d %s', response.status_code, response.text, extra={'method': method, 'url': url, 'params': params, 'response_text': response.text, 'status_code': response.status_code})
+                logger.error('%s Error: %d %s', self.__qualname__, response.status_code, response.text, extra={'method': method, 'url': url, 'params': params, 'response_text': response.text, 'status_code': response.status_code})
                 #response.raise_for_status()
 
             if not response.content:
-                logger.debug('VictoriabankMiaSdk Response: %d', response.status_code, extra={'response_content': response.content})
+                logger.debug('%s Response: %d', self.__qualname__, response.status_code, extra={'response_content': response.content})
                 return {}
 
             response_json: dict = response.json()
-            logger.debug('VictoriabankMiaSdk Response: %d', response.status_code, extra={'response_json': response_json})
+            logger.debug('%s Response: %d', self.__qualname__, response.status_code, extra={'response_json': response_json})
             return response_json
 
     @staticmethod
@@ -87,18 +86,18 @@ class VictoriabankMiaSdk:
         """Handles errors returned by the API."""
 
         if not isinstance(response, dict):
-            raise VictoriabankPaymentException(f"Invalid response received from server for endpoint {endpoint}")
+            raise VictoriabankMiaPaymentException(f"Invalid response received from server for endpoint {endpoint}")
 
         error_code = response.get('errorCode')
         if error_code:
             error_description = response.get('description')
-            raise VictoriabankPaymentException(f'Error sending request to endpoint {endpoint}: {error_description} ({error_code})')
+            raise VictoriabankMiaPaymentException(f'Error sending request to endpoint {endpoint}: {error_description} ({error_code})')
 
         return response
 
     @staticmethod
     def decode_callback(callback_jwt: str, public_key_pem: bytes):
-        """Validates the callback data signature."""
+        """Decodes and validates the callback data signature."""
 
         public_key_cert = load_pem_x509_certificate(public_key_pem)
         public_key = public_key_cert.public_key()
@@ -112,12 +111,12 @@ class VictoriabankMiaSdk:
 
             return decoded_payload
         except Exception as ex:
-            raise VictoriabankPaymentException(f'Failed to decode and verify payload signature: {ex}') from ex
+            raise VictoriabankMiaPaymentException(f'Failed to decode and verify payload signature: {ex}') from ex
 
 #region Requests
 class BearerAuth(requests.auth.AuthBase):
     """Attaches HTTP Bearer Token Authentication to the given Request object."""
-    #https://requests.readthedocs.io/en/latest/user/authentication/#new-forms-of-authentication
+    # https://requests.readthedocs.io/en/latest/user/authentication/#new-forms-of-authentication
 
     token: str = None
 
@@ -130,9 +129,9 @@ class BearerAuth(requests.auth.AuthBase):
 #endregion
 
 #region Exceptions
-class VictoriabankTokenException(Exception):
+class VictoriabankMiaTokenException(Exception):
     pass
 
-class VictoriabankPaymentException(Exception):
+class VictoriabankMiaPaymentException(Exception):
     pass
 #endregion

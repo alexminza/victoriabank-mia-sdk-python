@@ -1,18 +1,26 @@
 [project]
 name = "victoriabank-mia-sdk"
-version = "1.0.0"
-authors = [
-  { name="Alexander Minza" },
-]
+version = "1.0.1"
+authors = [{ name = "Alexander Minza" }]
 description = "Python SDK for Victoriabank MIA API"
 readme = "README.md"
 requires-python = ">=3.9"
-keywords = ["victoriabank", "moldova", "mia", "qr", "payments", "api", "sdk", "python"]
+dependencies = ["requests"]
+keywords = [
+  "victoriabank",
+  "moldova",
+  "mia",
+  "qr",
+  "payments",
+  "api",
+  "sdk",
+  "python",
+]
 classifiers = [
-    "Intended Audience :: Developers",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python :: 3",
-    "Topic :: Software Development :: Libraries :: Python Modules"
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 license = "GPL-3.0-or-later"
 
@@ -20,4 +28,4 @@ license = "GPL-3.0-or-later"
 Homepage = "https://github.com/alexminza/victoriabank-mia-sdk-python"
 Issues = "https://github.com/alexminza/victoriabank-mia-sdk-python/issues"
 Repository = "https://github.com/alexminza/victoriabank-mia-sdk-python"
-Documentation = "https://test-ipspj.victoriabank.md/index.html"
+Documentation = "https://test-ipspj.victoriabank.md"

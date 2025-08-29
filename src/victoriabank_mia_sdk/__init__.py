@@ -2,7 +2,7 @@
 
 import logging
 
-from .victoriabank_mia_sdk import VictoriabankMiaSdk, VictoriabankTokenException, VictoriabankPaymentException
+from .victoriabank_mia_sdk import VictoriabankMiaSdk, VictoriabankMiaTokenException, VictoriabankMiaPaymentException
 from .victoriabank_mia_auth import VictoriabankMiaAuthRequest, VictoriabankMiaAuth
 from .victoriabank_mia_api import VictoriabankMiaApiRequest, VictoriabankMiaApi
 
