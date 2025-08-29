@@ -1,9 +1,7 @@
 """Python SDK for Victoriabank MIA API"""
 
-import logging
 from .victoriabank_mia_sdk import VictoriabankMiaSdk, VictoriabankMiaTokenException
 
-logger = logging.getLogger(__name__)
 
 class VictoriabankMiaAuthRequest:
     """Factory class responsible for creating new instances of the VictoriabankMiaAuth class."""
@@ -53,7 +51,6 @@ class VictoriabankMiaAuth:
             endpoint = VictoriabankMiaSdk.AUTH_TOKEN
             response = self._client.send_request(method=method, url=endpoint, form_data=data)
         except Exception as ex:
-            logger.exception(self.generate_token.__qualname__)
             raise VictoriabankMiaTokenException(f'HTTP error while sending {method} request to endpoint {endpoint}: {ex}') from ex
 
         result = self._client.handle_response(response, VictoriabankMiaSdk.AUTH_TOKEN)

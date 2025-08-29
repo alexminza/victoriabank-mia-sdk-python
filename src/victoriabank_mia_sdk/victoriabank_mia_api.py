@@ -1,9 +1,7 @@
 """Python SDK for Victoriabank MIA API"""
 
-import logging
 from .victoriabank_mia_sdk import VictoriabankMiaSdk, VictoriabankMiaPaymentException
 
-logger = logging.getLogger(__name__)
 
 class VictoriabankMiaApiRequest:
     """Factory class responsible for creating new instances of the VictoriabankMiaApi class."""

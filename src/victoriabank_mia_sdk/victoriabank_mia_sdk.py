@@ -1,17 +1,16 @@
 """Python SDK for Victoriabank MIA API"""
 
-import logging
-
 from cryptography.x509 import load_pem_x509_certificate
 
 import requests
 import jwt
 
+from . import logger
+
+
 # Based on Python SDK for maib MIA API https://github.com/alexminza/maib-mia-sdk-python (https://pypi.org/project/maib-mia-sdk/)
 # IPS Business WebApi https://test-ipspj.victoriabank.md
 # IPS DemoPay WebApi https://test-ipspj-demopay.victoriabank.md/swagger/
-
-logger = logging.getLogger(__name__)
 
 class VictoriabankMiaSdk:
     # Victoriabank MIA API base urls
