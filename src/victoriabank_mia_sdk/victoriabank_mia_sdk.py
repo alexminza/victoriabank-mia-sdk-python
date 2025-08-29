@@ -87,12 +87,12 @@ class VictoriabankMiaSdk:
         """Handles errors returned by the API."""
 
         if not isinstance(response, dict):
-            raise VictoriabankPaymentException(f"Invalid response received from server for endpoint {endpoint}")
+            raise VictoriabankMiaPaymentException(f"Invalid response received from server for endpoint {endpoint}")
 
         error_code = response.get('errorCode')
         if error_code:
             error_description = response.get('description')
-            raise VictoriabankPaymentException(f'Error sending request to endpoint {endpoint}: {error_description} ({error_code})')
+            raise VictoriabankMiaPaymentException(f'Error sending request to endpoint {endpoint}: {error_description} ({error_code})')
 
         return response
 
@@ -112,7 +112,7 @@ class VictoriabankMiaSdk:
 
             return decoded_payload
         except Exception as ex:
-            raise VictoriabankPaymentException(f'Failed to decode and verify payload signature: {ex}') from ex
+            raise VictoriabankMiaPaymentException(f'Failed to decode and verify payload signature: {ex}') from ex
 
 #region Requests
 class BearerAuth(requests.auth.AuthBase):
@@ -130,9 +130,9 @@ class BearerAuth(requests.auth.AuthBase):
 #endregion
 
 #region Exceptions
-class VictoriabankTokenException(Exception):
+class VictoriabankMiaTokenException(Exception):
     pass
 
-class VictoriabankPaymentException(Exception):
+class VictoriabankMiaPaymentException(Exception):
     pass
 #endregion

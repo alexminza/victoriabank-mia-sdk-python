@@ -1,7 +1,7 @@
 """Python SDK for Victoriabank MIA API"""
 
 import logging
-from .victoriabank_mia_sdk import VictoriabankMiaSdk, VictoriabankPaymentException
+from .victoriabank_mia_sdk import VictoriabankMiaSdk, VictoriabankMiaPaymentException
 
 logger = logging.getLogger(__name__)
 
@@ -115,7 +115,7 @@ class VictoriabankMiaApi:
         try:
             response = self._client.send_request(method=method, url=endpoint, json_data=data, params=params, token=token, entity_id=entity_id)
         except Exception as ex:
-            raise VictoriabankPaymentException(f'HTTP error while sending {method} request to endpoint {endpoint}: {ex}') from ex
+            raise VictoriabankMiaPaymentException(f'HTTP error while sending {method} request to endpoint {endpoint}: {ex}') from ex
 
         return self._client.handle_response(response, endpoint)
 
@@ -124,17 +124,17 @@ class VictoriabankMiaApi:
         """Validates the access token."""
 
         if not token or len(token) == 0:
-            raise VictoriabankPaymentException('Access token is not valid. It should be a non-empty string.')
+            raise VictoriabankMiaPaymentException('Access token is not valid. It should be a non-empty string.')
 
     @staticmethod
     def _validate_id_param(entity_id: str):
         """Validates the ID parameter."""
 
         if not entity_id:
-            raise VictoriabankPaymentException('Missing ID.')
+            raise VictoriabankMiaPaymentException('Missing ID.')
 
         if len(entity_id) == 0:
-            raise VictoriabankPaymentException('Invalid ID parameter. Should be string of 36 characters.')
+            raise VictoriabankMiaPaymentException('Invalid ID parameter. Should be string of 36 characters.')
 
     @staticmethod
     def _validate_params(data: dict, required_params: list):
@@ -144,6 +144,6 @@ class VictoriabankMiaApi:
             # Check that all required parameters are present
             for param in required_params:
                 if data.get(param) is None:
-                    raise VictoriabankPaymentException(f'Missing required parameter: {param}')
+                    raise VictoriabankMiaPaymentException(f'Missing required parameter: {param}')
 
         return True
