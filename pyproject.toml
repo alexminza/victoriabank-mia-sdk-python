@@ -1,11 +1,11 @@
 [project]
 name = "victoriabank-mia-sdk"
-version = "1.0.1"
+version = "1.1.0"
 authors = [{ name = "Alexander Minza" }]
 description = "Python SDK for Victoriabank MIA API"
 readme = "README.md"
 requires-python = ">=3.9"
-dependencies = ["requests"]
+dependencies = ["httpx"]
 keywords = [
   "victoriabank",
   "moldova",
