@@ -2,7 +2,7 @@
 
 from cryptography.x509 import load_pem_x509_certificate
 
-import requests
+import httpx
 import jwt
 
 from . import logger
@@ -61,6 +61,19 @@ class VictoriabankMiaSdk:
 
         return url
 
+    def _process_response(self, response: httpx.Response):
+        if not response.ok:
+            logger.error('%s Error: %d %s', self.__qualname__, response.status_code, response.text, extra={'method': response.request.method, 'url': response.request.url, 'params': response.request.url.params, 'response_text': response.text, 'status_code': response.status_code})
+            #response.raise_for_status()
+
+        if not response.content:
+            logger.debug('%s Response: %d', self.__qualname__, response.status_code, extra={'response_content': response.content})
+            return {}
+
+        response_json: dict = response.json()
+        logger.debug('%s Response: %d', self.__qualname__, response.status_code, extra={'response_json': response_json})
+        return response_json
+
     def send_request(self, method: str, url: str, form_data: dict = None, json_data: dict = None, params: dict = None, token: str = None, entity_id: str = None):
         """Send a request and parse the response."""
 
@@ -68,18 +81,20 @@ class VictoriabankMiaSdk:
         url = self._build_url(url=url, entity_id=entity_id)
 
         logger.debug('%s Request: %s %s', self.__qualname__, method, url, extra={'method': method, 'url': url, 'form_data': form_data, 'json_data': json_data, 'params': params, 'token': token})
-        with requests.request(method=method, url=url, params=params, data=form_data, json=json_data, auth=auth, timeout=self.DEFAULT_TIMEOUT) as response:
-            if not response.ok:
-                logger.error('%s Error: %d %s', self.__qualname__, response.status_code, response.text, extra={'method': method, 'url': url, 'params': params, 'response_text': response.text, 'status_code': response.status_code})
-                #response.raise_for_status()
+        with httpx.Client() as client:
+            response = client.request(method=method, url=url, params=params, data=form_data, json=json_data, auth=auth, timeout=self.DEFAULT_TIMEOUT)
+            return self._process_response(response=response)
 
-            if not response.content:
-                logger.debug('%s Response: %d', self.__qualname__, response.status_code, extra={'response_content': response.content})
-                return {}
+    async def send_request_async(self, method: str, url: str, form_data: dict = None, json_data: dict = None, params: dict = None, token: str = None, entity_id: str = None):
+        """Send async request and parse the response."""
 
-            response_json: dict = response.json()
-            logger.debug('%s Response: %d', self.__qualname__, response.status_code, extra={'response_json': response_json})
-            return response_json
+        auth = BearerAuth(token) if token else None
+        url = self._build_url(url=url, entity_id=entity_id)
+
+        logger.debug('%s Request: %s %s', self.__qualname__, method, url, extra={'method': method, 'url': url, 'form_data': form_data, 'json_data': json_data, 'params': params, 'token': token})
+        async with httpx.AsyncClient() as client:
+            response = await client.request(method=method, url=url, params=params, data=form_data, json=json_data, auth=auth, timeout=self.DEFAULT_TIMEOUT)
+            return self._process_response(response=response)
 
     @staticmethod
     def handle_response(response: dict, endpoint: str):
@@ -113,19 +128,19 @@ class VictoriabankMiaSdk:
         except Exception as ex:
             raise VictoriabankMiaPaymentException(f'Failed to decode and verify payload signature: {ex}') from ex
 
-#region Requests
-class BearerAuth(requests.auth.AuthBase):
+#region Auth
+class BearerAuth(httpx.Auth):
     """Attaches HTTP Bearer Token Authentication to the given Request object."""
-    # https://requests.readthedocs.io/en/latest/user/authentication/#new-forms-of-authentication
+    # https://www.python-httpx.org/advanced/authentication/#custom-authentication-schemes
 
     token: str = None
 
     def __init__(self, token: str):
         self.token = token
 
-    def __call__(self, request: requests.PreparedRequest):
-        request.headers["Authorization"] = f'Bearer {self.token}'
-        return request
+    def auth_flow(self, request: httpx.Request):
+        request.headers['Authorization'] = f'Bearer {self.token}'
+        yield request
 #endregion
 
 #region Exceptions
