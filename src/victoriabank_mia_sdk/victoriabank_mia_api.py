@@ -225,6 +225,7 @@ class VictoriabankMiaApi:
         return self._client.handle_response(response, endpoint)
     #endregion
 
+    #region Validation
     @staticmethod
     def _validate_access_token(token: str):
         """Validates the access token."""
@@ -253,3 +254,4 @@ class VictoriabankMiaApi:
                     raise VictoriabankMiaPaymentException(f'Missing required parameter: {param}')
 
         return True
+    #endregion

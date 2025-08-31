@@ -21,6 +21,10 @@ class VictoriabankMiaAuth:
 
     #region Generate token API
     def generate_token(self, username: str, password: str):
+        """Generate token
+
+        https://test-ipspj.victoriabank.md/index.html#operations-Token-post_identity_token"""
+
         if not username and not password:
             raise VictoriabankMiaTokenException('Username and Password are required.')
 
@@ -31,6 +35,10 @@ class VictoriabankMiaAuth:
         return self._get_tokens(data=tokens_data)
 
     async def generate_token_async(self, username: str, password: str):
+        """Generate token
+
+        https://test-ipspj.victoriabank.md/index.html#operations-Token-post_identity_token"""
+
         if not username and not password:
             raise VictoriabankMiaTokenException('Username and Password are required.')
 
@@ -53,6 +61,10 @@ class VictoriabankMiaAuth:
 
     #region Refresh token API
     def refresh_token(self, refresh_token: str):
+        """Refresh token
+
+        https://test-ipspj.victoriabank.md/index.html#operations-Token-post_identity_token"""
+
         if not refresh_token:
             raise VictoriabankMiaTokenException('Refresh token is required.')
 
@@ -61,6 +73,10 @@ class VictoriabankMiaAuth:
         return self._get_tokens(data=tokens_data)
 
     async def refresh_token_async(self, refresh_token: str):
+        """Refresh token
+
+        https://test-ipspj.victoriabank.md/index.html#operations-Token-post_identity_token"""
+
         if not refresh_token:
             raise VictoriabankMiaTokenException('Refresh token is required.')
 
