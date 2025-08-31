@@ -25,9 +25,6 @@ class VictoriabankMiaAuth:
 
         https://test-ipspj.victoriabank.md/index.html#operations-Token-post_identity_token"""
 
-        if not username and not password:
-            raise VictoriabankMiaTokenException('Username and Password are required.')
-
         tokens_data = self._build_generate_data(
             username=username,
             password=password)
@@ -39,9 +36,6 @@ class VictoriabankMiaAuth:
 
         https://test-ipspj.victoriabank.md/index.html#operations-Token-post_identity_token"""
 
-        if not username and not password:
-            raise VictoriabankMiaTokenException('Username and Password are required.')
-
         tokens_data = self._build_generate_data(
             username=username,
             password=password)
@@ -50,6 +44,9 @@ class VictoriabankMiaAuth:
 
     @classmethod
     def _build_generate_data(cls, username: str, password: str):
+        if not username and not password:
+            raise VictoriabankMiaTokenException('Username and Password are required.')
+
         tokens_data = {
             'grant_type': 'password',
             'username': username,
@@ -65,11 +62,7 @@ class VictoriabankMiaAuth:
 
         https://test-ipspj.victoriabank.md/index.html#operations-Token-post_identity_token"""
 
-        if not refresh_token:
-            raise VictoriabankMiaTokenException('Refresh token is required.')
-
         tokens_data = self._build_refresh_data(refresh_token=refresh_token)
-
         return self._get_tokens(data=tokens_data)
 
     async def refresh_token_async(self, refresh_token: str):
@@ -77,15 +70,14 @@ class VictoriabankMiaAuth:
 
         https://test-ipspj.victoriabank.md/index.html#operations-Token-post_identity_token"""
 
-        if not refresh_token:
-            raise VictoriabankMiaTokenException('Refresh token is required.')
-
         tokens_data = self._build_refresh_data(refresh_token=refresh_token)
-
         return await self._get_tokens_async(data=tokens_data)
 
     @classmethod
     def _build_refresh_data(cls, refresh_token: str):
+        if not refresh_token:
+            raise VictoriabankMiaTokenException('Refresh token is required.')
+
         tokens_data = {
             'grant_type': 'refresh_token',
             'refresh_token': refresh_token
