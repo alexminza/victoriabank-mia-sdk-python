@@ -1,11 +1,12 @@
 """Python SDK for Victoriabank MIA API"""
 
+import logging
 from cryptography.x509 import load_pem_x509_certificate
 
 import httpx
 import jwt
 
-from . import logger
+logger = logging.getLogger(__name__)
 
 
 # Based on Python SDK for maib MIA API https://github.com/alexminza/maib-mia-sdk-python (https://pypi.org/project/maib-mia-sdk/)
@@ -52,7 +53,7 @@ class VictoriabankMiaSdk:
         return url
 
     def _process_response(self, response: httpx.Response):
-        if not response.ok:
+        if response.is_error:
             logger.error('%s Error: %d %s', self.__qualname__, response.status_code, response.text, extra={'method': response.request.method, 'url': response.request.url, 'params': response.request.url.params, 'response_text': response.text, 'status_code': response.status_code})
             #response.raise_for_status()
 
