@@ -54,15 +54,15 @@ class VictoriabankMiaSdk:
 
     def _process_response(self, response: httpx.Response):
         if response.is_error:
-            logger.error('%s Error: %d %s', self.__qualname__, response.status_code, response.text, extra={'method': response.request.method, 'url': response.request.url, 'params': response.request.url.params, 'response_text': response.text, 'status_code': response.status_code})
+            logger.error('%s Error: %d %s', VictoriabankMiaSdk.__qualname__, response.status_code, response.text, extra={'method': response.request.method, 'url': response.request.url, 'params': response.request.url.params, 'response_text': response.text, 'status_code': response.status_code})
             #response.raise_for_status()
 
         if not response.content:
-            logger.debug('%s Response: %d', self.__qualname__, response.status_code, extra={'response_content': response.content})
+            logger.debug('%s Response: %d', VictoriabankMiaSdk.__qualname__, response.status_code, extra={'response_content': response.content})
             return {}
 
         response_json: dict = response.json()
-        logger.debug('%s Response: %d', self.__qualname__, response.status_code, extra={'response_json': response_json})
+        logger.debug('%s Response: %d', VictoriabankMiaSdk.__qualname__, response.status_code, extra={'response_json': response_json})
         return response_json
 
     def send_request(self, method: str, url: str, form_data: dict = None, json_data: dict = None, params: dict = None, token: str = None, entity_id: str = None):
@@ -71,7 +71,7 @@ class VictoriabankMiaSdk:
         auth = BearerAuth(token) if token else None
         url = self._build_url(url=url, entity_id=entity_id)
 
-        logger.debug('%s Request: %s %s', self.__qualname__, method, url, extra={'method': method, 'url': url, 'form_data': form_data, 'json_data': json_data, 'params': params, 'token': token})
+        logger.debug('%s Request: %s %s', VictoriabankMiaSdk.__qualname__, method, url, extra={'method': method, 'url': url, 'form_data': form_data, 'json_data': json_data, 'params': params, 'token': token})
         with httpx.Client() as client:
             response = client.request(method=method, url=url, params=params, data=form_data, json=json_data, auth=auth, timeout=self.DEFAULT_TIMEOUT)
             return self._process_response(response=response)
@@ -82,7 +82,7 @@ class VictoriabankMiaSdk:
         auth = BearerAuth(token) if token else None
         url = self._build_url(url=url, entity_id=entity_id)
 
-        logger.debug('%s Request: %s %s', self.__qualname__, method, url, extra={'method': method, 'url': url, 'form_data': form_data, 'json_data': json_data, 'params': params, 'token': token})
+        logger.debug('%s Request: %s %s', VictoriabankMiaSdk.__qualname__, method, url, extra={'method': method, 'url': url, 'form_data': form_data, 'json_data': json_data, 'params': params, 'token': token})
         async with httpx.AsyncClient() as client:
             response = await client.request(method=method, url=url, params=params, data=form_data, json=json_data, auth=auth, timeout=self.DEFAULT_TIMEOUT)
             return self._process_response(response=response)
