@@ -1,6 +1,10 @@
 """Python SDK for Victoriabank MIA API"""
 
+import logging
+
 from .victoriabank_mia_sdk import VictoriabankMiaSdk, VictoriabankMiaPaymentException
+
+logger = logging.getLogger(__name__)
 
 
 class VictoriabankMiaApiRequest:
@@ -198,6 +202,7 @@ class VictoriabankMiaApi:
         try:
             response = self._client.send_request(method=method, url=endpoint, json_data=data, params=params, token=token, entity_id=entity_id)
         except Exception as ex:
+            logger.exception(VictoriabankMiaApi.__qualname__)
             raise VictoriabankMiaPaymentException(f'HTTP error while sending {method} request to endpoint {endpoint}: {ex}') from ex
 
         return self._client.handle_response(response, endpoint)
@@ -220,6 +225,7 @@ class VictoriabankMiaApi:
         try:
             response = await self._client.send_request_async(method=method, url=endpoint, json_data=data, params=params, token=token, entity_id=entity_id)
         except Exception as ex:
+            logger.exception(VictoriabankMiaApi.__qualname__)
             raise VictoriabankMiaPaymentException(f'HTTP error while sending {method} request to endpoint {endpoint}: {ex}') from ex
 
         return self._client.handle_response(response, endpoint)
