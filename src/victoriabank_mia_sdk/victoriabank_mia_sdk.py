@@ -62,7 +62,7 @@ class VictoriabankMiaSdk:
             return {}
 
         response_json: dict = response.json()
-        logger.debug('%s Response: %d', self.__class__.__qualname__, response.status_code, extra={'response_json': response_json})
+        logger.debug('%s Response: %d %s %s', self.__class__.__qualname__, response.status_code, response.request.method, response.request.url, extra={'method': response.request.method, 'url': response.request.url, 'params': response.request.url.params, 'response_json': response_json, 'status_code': response.status_code})
         return response_json
 
     def send_request(self, method: str, url: str, form_data: dict = None, json_data: dict = None, params: dict = None, token: str = None, entity_id: str = None):
