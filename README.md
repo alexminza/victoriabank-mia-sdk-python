@@ -1,5 +1,6 @@
 # Python SDK for Victoriabank MIA API
 * Victoriabank IPS Business WebApi docs: https://test-ipspj.victoriabank.md
+* Victoriabank IPS DemoPay WebApi https://test-ipspj-demopay.victoriabank.md/swagger/
 * GitHub project https://github.com/alexminza/victoriabank-mia-sdk-python
 * PyPI package https://pypi.org/project/victoriabank-mia-sdk/
 
