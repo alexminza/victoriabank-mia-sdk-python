@@ -90,7 +90,7 @@ class VictoriabankMiaAuth:
         return token_data
     #endregion
 
-    #region Get tokens
+    #region Generate token
     def _generate_token(self, data: dict):
         """Get tokens
 
