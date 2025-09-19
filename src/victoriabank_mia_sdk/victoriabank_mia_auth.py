@@ -29,35 +29,35 @@ class VictoriabankMiaAuth:
 
         https://test-ipspj.victoriabank.md/index.html#operations-Token-post_identity_token"""
 
-        tokens_data = self._build_generate_data(
+        token_data = self._build_generate_token_data(
             username=username,
             password=password)
 
-        return self._get_tokens(data=tokens_data)
+        return self._generate_token(data=token_data)
 
     async def generate_token_async(self, username: str, password: str):
         """Generate token
 
         https://test-ipspj.victoriabank.md/index.html#operations-Token-post_identity_token"""
 
-        tokens_data = self._build_generate_data(
+        token_data = self._build_generate_token_data(
             username=username,
             password=password)
 
-        return await self._get_tokens_async(data=tokens_data)
+        return await self._generate_token_async(data=token_data)
 
     @classmethod
-    def _build_generate_data(cls, username: str, password: str):
+    def _build_generate_token_data(cls, username: str, password: str):
         if not username and not password:
             raise VictoriabankMiaTokenException('Username and Password are required.')
 
-        tokens_data = {
+        token_data = {
             'grant_type': 'password',
             'username': username,
             'password': password
         }
 
-        return tokens_data
+        return token_data
     #endregion
 
     #region Refresh token API
@@ -66,32 +66,32 @@ class VictoriabankMiaAuth:
 
         https://test-ipspj.victoriabank.md/index.html#operations-Token-post_identity_token"""
 
-        tokens_data = self._build_refresh_data(refresh_token=refresh_token)
-        return self._get_tokens(data=tokens_data)
+        token_data = self._build_refresh_token_data(refresh_token=refresh_token)
+        return self._generate_token(data=token_data)
 
     async def refresh_token_async(self, refresh_token: str):
         """Refresh token
 
         https://test-ipspj.victoriabank.md/index.html#operations-Token-post_identity_token"""
 
-        tokens_data = self._build_refresh_data(refresh_token=refresh_token)
-        return await self._get_tokens_async(data=tokens_data)
+        token_data = self._build_refresh_token_data(refresh_token=refresh_token)
+        return await self._generate_token_async(data=token_data)
 
     @classmethod
-    def _build_refresh_data(cls, refresh_token: str):
+    def _build_refresh_token_data(cls, refresh_token: str):
         if not refresh_token:
             raise VictoriabankMiaTokenException('Refresh token is required.')
 
-        tokens_data = {
+        token_data = {
             'grant_type': 'refresh_token',
             'refresh_token': refresh_token
         }
 
-        return tokens_data
+        return token_data
     #endregion
 
     #region Get tokens
-    def _get_tokens(self, data: dict):
+    def _generate_token(self, data: dict):
         """Get tokens
 
         https://test-ipspj.victoriabank.md/index.html#operations-Token-post_identity_token"""
@@ -107,7 +107,7 @@ class VictoriabankMiaAuth:
         result = self._client.handle_response(response, VictoriabankMiaSdk.AUTH_TOKEN)
         return result
 
-    async def _get_tokens_async(self, data: dict):
+    async def _generate_token_async(self, data: dict):
         """Get tokens
 
         https://test-ipspj.victoriabank.md/index.html#operations-Token-post_identity_token"""
