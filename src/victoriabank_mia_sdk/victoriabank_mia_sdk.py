@@ -108,6 +108,16 @@ class VictoriabankMiaSdk:
 
         return transaction_id
 
+    @classmethod
+    def get_payment_rrn(cls, payment_reference: str):
+        """Extract payment RRN (Retrieval Reference Number) from payment reference string."""
+
+        #NOTE: Victoriabank MIA API provides only a composed transaction string that needs to be parsed
+        transaction_id = cls.get_payment_transaction_id(payment_reference)
+        payment_rrn = transaction_id[-12:] if len(transaction_id) > 12 else transaction_id
+
+        return payment_rrn
+
     def _build_url(self, url: str, entity_id: str = None):
         """Build the complete URL for the request"""
 
