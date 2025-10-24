@@ -98,6 +98,16 @@ class VictoriabankMiaSdk:
         except Exception as ex:
             raise VictoriabankMiaPaymentException(f'Failed to decode and verify payload signature: {ex}') from ex
 
+    @staticmethod
+    def get_payment_transaction_id(payment_reference: str):
+        """Extract payment transaction ID from payment reference string."""
+
+        #NOTE: Victoriabank MIA API provides only a composed reference string that needs to be parsed
+        transaction_components = payment_reference.split('|')
+        transaction_id = transaction_components[3]
+
+        return transaction_id
+
     def _build_url(self, url: str, entity_id: str = None):
         """Build the complete URL for the request"""
 
