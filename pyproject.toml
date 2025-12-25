@@ -1,6 +1,6 @@
 [project]
 name = "victoriabank-mia-sdk"
-version = "1.1.5"
+version = "1.1.6"
 authors = [{ name = "Alexander Minza" }]
 description = "Python SDK for Victoriabank MIA API"
 readme = "README.md"
